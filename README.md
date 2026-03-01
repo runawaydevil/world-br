@@ -78,7 +78,7 @@ npm install
 npm run dev
 ```
 
-Abra no navegador a URL indicada (ex.: `http://localhost:5173`). Se a porta 5173 estiver em uso, o Vite usará outra (ex.: 3001).
+Abra no navegador a URL indicada (ex.: `http://localhost:4582`). Se a porta 4582 estiver em uso, o Vite usará outra (ex.: 4583).
 
 **Variante Brasil:**
 
@@ -93,7 +93,7 @@ cp .env.example .env.local   # preencha as chaves que for usar
 vercel dev
 ```
 
-Abre em `http://localhost:3000` (ou na porta que o Vercel indicar).
+Abre em `http://localhost:4582` (ou na porta que o Vercel indicar).
 
 ### Variáveis de ambiente
 

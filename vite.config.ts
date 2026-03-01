@@ -418,7 +418,7 @@ function sebufApiPlugin(): Plugin {
           const corsMod = cachedCorsMod;
 
           // Convert Connect IncomingMessage to Web Standard Request
-          const port = server.config.server.port || 3000;
+          const port = server.config.server.port || 4582;
           const url = new URL(req.url, `http://localhost:${port}`);
 
           // Read body for POST requests
@@ -903,7 +903,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: 4582,
     open: !isE2E,
     hmr: isE2E ? false : undefined,
     watch: {
