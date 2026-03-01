@@ -96,7 +96,8 @@ export function isDesktopRuntime(): boolean {
 
 export function getApiBaseUrl(): string {
   if (!isDesktopRuntime()) {
-    return '';
+    const base = import.meta.env.VITE_API_BASE;
+    return base ? normalizeBaseUrl(base) : '';
   }
 
   const configuredBaseUrl = import.meta.env.VITE_TAURI_API_BASE_URL;
