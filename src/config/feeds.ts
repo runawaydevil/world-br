@@ -1024,6 +1024,59 @@ const FINANCE_FEEDS: Record<string, Feed[]> = {
   ],
 };
 
+// BR variant — same 11 categories as server VARIANT_FEEDS.br (digest-only)
+const BR_FEEDS: Record<string, Feed[]> = {
+  politics: [
+    { name: 'G1', url: rss('https://g1.globo.com/rss/g1/') },
+    { name: 'UOL', url: rss('https://rss.uol.com.br/feed/noticias.xml') },
+    { name: 'Folha de S.Paulo', url: rss('https://feeds.folha.uol.com.br/emcimadahora/rss091.xml') },
+    { name: 'Estadão', url: rss('https://rss.estadao.com.br/geral') },
+    { name: 'BBC Brasil', url: rss('https://feeds.bbci.co.uk/portuguese/rss.xml') },
+    { name: 'CNN Brasil', url: rss('https://www.cnnbrasil.com.br/feed/') },
+  ],
+  latam: [
+    { name: 'BBC América Latina', url: rss('https://feeds.bbci.co.uk/news/world/latin_america/rss.xml') },
+    { name: 'Guardian Americas', url: rss('https://www.theguardian.com/world/americas/rss') },
+    { name: 'France 24 Português', url: rss('https://www.france24.com/pt/rss') },
+  ],
+  us: [
+    { name: 'Reuters Brasil', url: rss('https://news.google.com/rss/search?q=' + encodeURIComponent('site:reuters.com.br OR site:reuters.com Brasil') + '&hl=en-US&gl=US&ceid=US:en') },
+    { name: 'NPR', url: rss('https://feeds.npr.org/1001/rss.xml') },
+  ],
+  europe: [
+    { name: 'DW Português', url: rss('https://rss.dw.com/xml/rss-pt-all') },
+    { name: 'Euronews', url: rss('https://pt.euronews.com/rss') },
+  ],
+  asia: [
+    { name: 'BBC Asia', url: rss('https://feeds.bbci.co.uk/news/world/asia/rss.xml') },
+  ],
+  markets: [
+    { name: 'Valor Econômico', url: rss('https://www.valor.com.br/rss') },
+    { name: 'Infomoney', url: rss('https://www.infomoney.com.br/feed/') },
+    { name: 'Investing.com Brasil', url: rss('https://br.investing.com/rss/news.rss') },
+    { name: 'CNN Brasil Economia', url: rss('https://www.cnnbrasil.com.br/economia/feed/') },
+  ],
+  economic: [
+    { name: 'Valor Econômico', url: rss('https://www.valor.com.br/rss') },
+    { name: 'BCB', url: rss('https://www.bcb.gov.br/estabilidadefinanceira/rss') },
+  ],
+  commodities: [
+    { name: 'Commodities', url: rss('https://news.google.com/rss/search?q=' + encodeURIComponent('(petróleo OR commodities OR "preço do dólar" OR "taxa selic") Brasil when:2d') + '&hl=en-US&gl=US&ceid=US:en') },
+  ],
+  crypto: [
+    { name: 'Cointelegraph Brasil', url: rss('https://cointelegraph.com.br/rss') },
+    { name: 'CriptoFacil', url: rss('https://www.criptofacil.com/feed/') },
+  ],
+  tech: [
+    { name: 'TecMundo', url: rss('https://www.tecmundo.com.br/rss') },
+    { name: 'Olhar Digital', url: rss('https://olhardigital.com.br/rss') },
+    { name: 'Canaltech', url: rss('https://canaltech.com.br/feed/') },
+  ],
+  energy: [
+    { name: 'Energia', url: rss('https://news.google.com/rss/search?q=' + encodeURIComponent('(energia OR "pré-sal" OR Petrobras OR "geração de energia") Brasil when:2d') + '&hl=en-US&gl=US&ceid=US:en') },
+  ],
+};
+
 const HAPPY_FEEDS: Record<string, Feed[]> = {
   positive: [
     { name: 'Good News Network', url: rss('https://www.goodnewsnetwork.org/feed/') },
@@ -1065,9 +1118,22 @@ export const FEEDS = SITE_VARIANT === 'tech'
     ? FINANCE_FEEDS
     : SITE_VARIANT === 'happy'
       ? HAPPY_FEEDS
-      : FULL_FEEDS;
+      : SITE_VARIANT === 'br'
+        ? BR_FEEDS
+        : FULL_FEEDS;
 
-export const SOURCE_REGION_MAP: Record<string, { labelKey: string; feedKeys: string[] }> = {
+// BR variant — only regions that exist in BR_FEEDS (for digest-aligned filter)
+const BR_SOURCE_REGION_MAP: Record<string, { labelKey: string; feedKeys: string[] }> = {
+  worldwide: { labelKey: 'header.sourceRegionWorldwide', feedKeys: ['politics'] },
+  us: { labelKey: 'header.sourceRegionUS', feedKeys: ['us'] },
+  europe: { labelKey: 'header.sourceRegionEurope', feedKeys: ['europe'] },
+  latam: { labelKey: 'header.sourceRegionLatAm', feedKeys: ['latam'] },
+  asia: { labelKey: 'header.sourceRegionAsiaPacific', feedKeys: ['asia'] },
+  topical: { labelKey: 'header.sourceRegionTopical', feedKeys: ['energy', 'tech'] },
+  marketsAnalysis: { labelKey: 'header.sourceRegionMarkets', feedKeys: ['markets', 'economic', 'commodities', 'crypto'] },
+};
+
+const FULL_SOURCE_REGION_MAP: Record<string, { labelKey: string; feedKeys: string[] }> = {
   // Full (geopolitical) variant regions
   worldwide: { labelKey: 'header.sourceRegionWorldwide', feedKeys: ['politics', 'crisis'] },
   us: { labelKey: 'header.sourceRegionUS', feedKeys: ['us', 'gov'] },
@@ -1099,6 +1165,9 @@ export const SOURCE_REGION_MAP: Record<string, { labelKey: string; feedKeys: str
   finRegulation: { labelKey: 'header.sourceRegionFinRegulation', feedKeys: ['regulation'] },
   gulfMena: { labelKey: 'header.sourceRegionGulfMena', feedKeys: ['gccNews'] },
 };
+
+export const SOURCE_REGION_MAP: Record<string, { labelKey: string; feedKeys: string[] }> =
+  SITE_VARIANT === 'br' ? BR_SOURCE_REGION_MAP : FULL_SOURCE_REGION_MAP;
 
 export const INTEL_SOURCES: Feed[] = [
   // Defense & Security (Tier 1)

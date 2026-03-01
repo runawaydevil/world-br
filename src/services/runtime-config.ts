@@ -94,7 +94,7 @@ const defaultToggles: Record<RuntimeFeatureId, boolean> = {
   aiOllama: true,
   wtoTrade: true,
   supplyChain: true,
-  newsPerFeedFallback: true,
+  newsPerFeedFallback: false,
   aviationStack: true,
   icaoNotams: true,
 };
