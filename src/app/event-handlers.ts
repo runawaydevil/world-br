@@ -411,7 +411,12 @@ export class EventHandlerManager implements AppModule {
     const el = document.getElementById('headerClock');
     if (!el) return;
     const tick = () => {
-      el.textContent = new Date().toUTCString().replace('GMT', 'UTC');
+      const now = new Date();
+      if (SITE_VARIANT === 'br') {
+        el.textContent = now.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', hour12: false, day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      } else {
+        el.textContent = now.toUTCString().replace('GMT', 'UTC');
+      }
     };
     tick();
     this.clockIntervalId = setInterval(tick, 1000);
