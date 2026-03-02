@@ -20,7 +20,7 @@
     "build:tech": "node scripts/run-with-variant.mjs tech build",
     "build:finance": "node scripts/run-with-variant.mjs finance build",
     "build:happy": "node scripts/run-with-variant.mjs happy build",
-    "build:br": "node scripts/run-with-variant.mjs br build",
+    "build:br": "cross-env NODE_OPTIONS=--max-old-space-size=4096 node scripts/run-with-variant.mjs br build",
     "typecheck": "tsc --noEmit",
     "typecheck:api": "tsc --noEmit -p tsconfig.api.json",
     "typecheck:all": "tsc --noEmit && tsc --noEmit -p tsconfig.api.json",
